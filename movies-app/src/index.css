@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.textDecorationNone{
+  text-decoration: none;
+}
+
+.textDecorationNone:hover {
+  text-decoration: underline;
+}
+
+.commentField {
+  width: 100%;
+}

@@ -9,10 +9,10 @@ const Navigation = (props) => {
     <Fragment>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs>
-          <Link to="/">
+          <Link className="textDecorationNone" to="/">
             <Tab label="Home" />
           </Link>
-          <Link to="/movies">
+          <Link className="textDecorationNone" to="/movies">
             <Tab label="Movies" />
           </Link>
         </Tabs>

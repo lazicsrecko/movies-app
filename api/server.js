@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const movieRouter = require("./routes/movies");
+const commentRouter = require("./routes/comments");
 
 const PORT = process.env.PORT || 3001;
 
@@ -24,6 +25,9 @@ app.use(bodyParser.json());
 
 // Movie routes
 app.use("/movies", movieRouter);
+
+// Comment routes
+app.use("/comment", commentRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
