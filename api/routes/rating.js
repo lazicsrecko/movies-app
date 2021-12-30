@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Comment = require("../models/comments");
+const Rating = require("../models/rating");
 const Movie = require("../models/movies");
 
 // Get list of all comments from database
@@ -16,20 +16,26 @@ const Movie = require("../models/movies");
 //   }
 // });
 
-// Comment movie
+// Rate a movie
 router.post("/", async (req, res) => {
-  const { movie_id, name, text, date } = req.body;
+  const { movie_id, user_id, rating, date } = req.body;
   try {
-    const newComment = await Comment.create({
+    const newRating = await Rating.create({
       movie_id,
-      name,
-      text,
+      user_id,
+      rating,
       date,
     });
+    console.log(rating);
+    const ratingsByMovieId = await Rating.find({ movie_id: movie_id });
+    const movieRating =
+      ratingsByMovieId.reduce((prevValue, crntValue) => prevValue + crntValue) /
+      ratingsByMovieId.length;
     const movie = await Movie.findById(movie_id);
-    movie.comments.push(newComment._id);
+    movie.rating = movieRating;
     await movie.save();
-    res.status(200).send(newComment);
+    console.log(movie.rating);
+    res.status(200).send(movieRating);
   } catch (err) {
     res.status(500).json({
       message: "Some  error occured",

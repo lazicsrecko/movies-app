@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Movie = require("../models/movies");
 
-
 // Get list of all movies from database
 router.get("/", async (req, res) => {
   try {
@@ -17,20 +16,20 @@ router.get("/", async (req, res) => {
 });
 
 // Get movie by id
-router.get("/:id", async(req, res) => {
+router.get("/:id", async (req, res) => {
   const movieId = req.params.id;
-  const movie = await Movie.findById(movieId);
+  const movie = await Movie.findById(movieId).populate("comments");
   try {
-    if(!movie){
-      res.status(400).send('No such movie in database!')
+    if (!movie) {
+      res.status(400).send("No such movie in database!");
     }
     res.status(200).send(movie);
   } catch (err) {
     res.status(500).json({
-      message: 'Some  error occured',
-      err
-    })
+      message: "Some  error occured",
+      err,
+    });
   }
-})
+});
 
 module.exports = router;

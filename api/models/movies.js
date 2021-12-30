@@ -9,6 +9,7 @@ const moviesSchema = new Schema({
   cast: { type: Array, required: true },
   directors: Array,
   rated: String,
+  rating: Number,
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 });
 
