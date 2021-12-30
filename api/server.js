@@ -4,9 +4,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const movieRouter = require("./routes/movies");
-const commentRouter = require("./routes/comments");
-const ratingRouter = require("./routes/rating");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const movieRouter = require("./routes/movie-route");
+const commentRouter = require("./routes/comment-route");
+const ratingRouter = require("./routes/rating-route");
 
 const PORT = process.env.PORT || 3001;
 
@@ -18,9 +22,12 @@ mongoose
   .then(console.log("Database connected!"))
   .catch((err) => console.log(err));
 
-// Helper tools
+// Middleware
 app.use(logger("dev"));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

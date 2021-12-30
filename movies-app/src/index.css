@@ -23,3 +23,33 @@ code {
 .commentField {
   width: 100%;
 }
+
+.movieRating {
+  position: absolute;
+  color: white;
+  border: solid #c2c2c2 1px;
+  border-radius: 5px;
+  padding: 5px !important;
+  margin: 1rem;
+  background: #d1d1d160;
+}
+.cardImage{
+  width: 100%;
+}
+
+.btn {
+  display: block !important;
+  margin: 1rem 0 !important;
+}
+.navbar {
+  border-bottom: 1;
+  border-bottom: solid 1px #c2c2c2;
+  padding: 0.5rem;
+}
+.navMenu {
+  position: absolute;
+  right: 0;
+}
+.menu-appbar {
+  margin-top: 45px;
+}

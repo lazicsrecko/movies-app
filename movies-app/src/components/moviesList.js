@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { Link } from 'react-router-dom';
 
 const MoviesList = (props) => {
@@ -20,28 +21,27 @@ const MoviesList = (props) => {
   }, []);
 
   return (
-    <div>
+    <Grid container spacing={2}>
       {movies.map((movie) => (
-        <Link key={movie._id} className="textDecorationNone" to={`/movies/${movie._id}`}>
-          <Card sx={{ maxWidth: 345, margin: "2rem" }}>
-            <CardMedia
-              component="img"
-              height="140"
-              image={movie.poster}
-              alt="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {movie.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {movie.plot}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Link>
+        <Grid item xs={4}>
+          <Link key={movie._id} className="textDecorationNone" to={`/movies/${movie._id}`}>
+            <Card sx={{ maxWidth: 345, margin: "2rem" }}>
+              <CardMedia
+                component="img"
+                height="500"
+                image={movie.poster}
+                alt="#"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {movie.title}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 };
 

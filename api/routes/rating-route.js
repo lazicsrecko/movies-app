@@ -18,24 +18,22 @@ const Movie = require("../models/movies");
 
 // Rate a movie
 router.post("/", async (req, res) => {
-  const { movie_id, user_id, rating, date } = req.body;
+  const { movie_id, name, rating, date } = req.body;
   try {
     const newRating = await Rating.create({
       movie_id,
-      user_id,
+      name,
       rating,
       date,
     });
-    console.log(rating);
+    console.log(newRating);
     const ratingsByMovieId = await Rating.find({ movie_id: movie_id });
-    const movieRating =
-      ratingsByMovieId.reduce((prevValue, crntValue) => prevValue + crntValue) /
-      ratingsByMovieId.length;
+    const sumOfMovieRating = ratingsByMovieId.reduce((prevValue, crntValue) => prevValue + crntValue.rating, 0);
+    const movieRating = sumOfMovieRating / ratingsByMovieId.length;
     const movie = await Movie.findById(movie_id);
     movie.rating = movieRating;
     await movie.save();
-    console.log(movie.rating);
-    res.status(200).send(movieRating);
+    res.status(200).send(newRating);
   } catch (err) {
     res.status(500).json({
       message: "Some  error occured",

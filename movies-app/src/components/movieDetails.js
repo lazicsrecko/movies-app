@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import StarIcon from '@mui/icons-material/Star';
 
 const MovieDetails = (props) => {
   const [movie, setMovie] = useState(null);
@@ -33,7 +34,9 @@ const MovieDetails = (props) => {
 
   const onRatingChange = async (e) => {
     setRateInput(e.target.value);
-    console.log(rateInput);
+  };
+
+  const onRatingSubmit = async () => {
     const rating = {
       name: "User user",
       movie_id: movie._id,
@@ -45,7 +48,7 @@ const MovieDetails = (props) => {
     if (rate) {
       fetchMovie(movieId);
     }
-  };
+  }
 
   const onCommentSubmit = async () => {
     const comment = {
@@ -71,11 +74,16 @@ const MovieDetails = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Card sx={{ maxWidth: 700 }}>
+              {movie.rating && <CardContent className="movieRating">
+                <Typography variant="h4" component="span">
+                  <StarIcon sx={{ color: "yellow" }} />{movie.rating.toFixed(1)}
+                </Typography>
+              </CardContent>}
               <CardMedia
+                className="cardImage"
                 component="img"
-                height="800"
                 image={movie.poster}
-                alt="green iguana"
+                alt="#"
               />
               <CardContent>
                 <Typography gutterBottom variant="h4" component="div">
@@ -107,11 +115,18 @@ const MovieDetails = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item style={{borderLeft: 'solid #d1d1d1 1px'}} xs={6}>
             <Typography gutterBottom variant="h4" component="div">
               Rating
             </Typography>
-            <Rating onChange={onRatingChange} max={10} value={rateInput} />
+            <Rating  onChange={onRatingChange} max={10} value={rateInput} />
+            <Button
+              className="btn"
+              variant="contained"
+              onClick={onRatingSubmit}
+            >
+              Rate
+            </Button>
             <Typography gutterBottom variant="h4" component="div">
               Comments
             </Typography>
@@ -143,7 +158,7 @@ const MovieDetails = (props) => {
               onChange={onInputChage}
             />
             <Button
-              sx={{ marginTop: "1rem" }}
+              className="btn"
               variant="contained"
               onClick={onCommentSubmit}
             >
