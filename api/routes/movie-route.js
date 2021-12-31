@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isLoggedIn } = require("../middleware/auth-middleware");
 const Movie = require("../models/movies");
 
 // Get list of all movies from database
@@ -16,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get movie by id
-router.get("/:id", async (req, res) => {
+router.get("/:id", isLoggedIn, async (req, res) => {
   const movieId = req.params.id;
   const movie = await Movie.findById(movieId).populate("comments");
   try {

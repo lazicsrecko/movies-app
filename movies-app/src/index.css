@@ -1,18 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.textDecorationNone{
+.textDecorationNone {
   text-decoration: none;
 }
 
@@ -33,7 +33,7 @@ code {
   margin: 1rem;
   background: #d1d1d160;
 }
-.cardImage{
+.cardImage {
   width: 100%;
 }
 
@@ -52,4 +52,31 @@ code {
 }
 .menu-appbar {
   margin-top: 45px;
+}
+.registerHeading {
+  text-align: center;
+  margin-bottom: 2rem !important;
+}
+.inputFormFields {
+  width: 100%;
+  margin-bottom: 0.5rem !important;
+}
+.authLinks {
+  text-decoration: none;
+}
+.authLinks:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.spinner {
+  justify-content: center;
+  display: flex;
+  margin-top: 5rem;
+}
+.searchBar {
+  margin: 1rem 0 !important;
+  text-align: center !important;
+}
+.searchBarInput {
+  width: 500px;
 }

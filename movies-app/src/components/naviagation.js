@@ -1,4 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../services/auth-services";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -12,6 +14,8 @@ import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 
 const Navigation = (props) => {
+  const { isLoggedIn, setIsLoggedIn } = props;
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -19,7 +23,7 @@ const Navigation = (props) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(!anchorElUser);
   };
 
   const handleCloseNavMenu = () => {
@@ -29,6 +33,15 @@ const Navigation = (props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const onLogout = async () => {
+    const isLoggedOut = await logout();
+
+    if (isLoggedOut) {
+      setIsLoggedIn(false);
+      navigate("/login");
+    }
+  };
   return (
     <Fragment>
       <Box className="navbar">
@@ -36,34 +49,49 @@ const Navigation = (props) => {
           <Link className="textDecorationNone" to="/">
             <Tab label={<TheaterComedyIcon />} />
           </Link>
-          <Link className="textDecorationNone" to="/movies">
-            <Tab label="Movies" />
-          </Link>
+          {isLoggedIn && (
+            <Link className="textDecorationNone" to="/movies">
+              <Tab label="Movies" />
+            </Link>
+          )}
           <Box className="navMenu">
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu}>
-                <Avatar />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              className="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
+            {!isLoggedIn && (
+              <Fragment>
+                <Link className="textDecorationNone" to="/register">
+                  <Tab label="Register" />
+                </Link>
+                <Link className="textDecorationNone" to="/login">
+                  <Tab label="Login" />
+                </Link>
+              </Fragment>
+            )}
+            {isLoggedIn && (
+              <Fragment>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu}>
+                    <Avatar />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  className="menu-appbar"
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={anchorElUser}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={onLogout}>
+                    <Typography>Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </Fragment>
+            )}
           </Box>
         </Tabs>
       </Box>

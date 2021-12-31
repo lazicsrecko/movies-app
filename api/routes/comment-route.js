@@ -1,23 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const { isLoggedIn } = require("../middleware/auth-middleware");
 const Comment = require("../models/comments");
 const Movie = require("../models/movies");
 
-// Get list of all comments from database
-// router.get("/", async (req, res) => {
-//   try {
-//     const movies = await Movie.find();
-//     res.status(200).send(movies);
-//   } catch (err) {
-//     res.status(500).json({
-//       message: "Some error occured",
-//       err,
-//     });
-//   }
-// });
-
 // Comment movie
-router.post("/", async (req, res) => {
+router.post("/", isLoggedIn, async (req, res) => {
   const { movie_id, name, text, date } = req.body;
   try {
     const newComment = await Comment.create({

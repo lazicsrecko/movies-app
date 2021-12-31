@@ -1,29 +1,38 @@
-import axios from 'axios';
+import axios from "axios";
+
+const session_id = sessionStorage.getItem("session_id");
 
 const getMovies = async () => {
-    const res = await axios.get("http://localhost:3001/movies");
-    
-    if(res.statusText !== 'OK'){
-        throw new Error('Something went wrong!');
-    }
+  const res = await axios.get("http://localhost:3001/movies", {
+    withCredentials: true,
+  });
 
-    return res.data;
-}
+  if (res.statusText !== "OK") {
+    throw new Error("Something went wrong!");
+  }
+
+  return res.data;
+};
 
 const getMovieById = async (movieId) => {
-    const res = await axios.get(`http://localhost:3001/movies/${movieId}`);
-
-    if(res.statusText !== 'OK'){
-        throw new Error('Something went wrong!');
+  const res = await axios.get(
+    `http://localhost:3001/movies/${movieId}`,
+    {
+      withCredentials: true,
+    },
+    {
+      session_id,
     }
-    
-    return res.data;
-}
+  );
+
+  if (res.statusText !== "OK") {
+    throw new Error("Something went wrong!");
+  }
+
+  return res.data;
+};
 
 const _getMovies = getMovies;
 const _getMovieById = getMovieById;
 
-export { 
-    _getMovies as getMovies,
-    _getMovieById as getMovieById
-};
+export { _getMovies as getMovies, _getMovieById as getMovieById };
