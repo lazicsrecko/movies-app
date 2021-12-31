@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../context/user-context";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { login } from "../services/auth-services";
 import TextField from "@mui/material/TextField";
@@ -9,6 +10,7 @@ import Button from "@mui/material/Button";
 const Login = (props) => {
   const { isLoggedIn, setIsLoggedIn } = props;
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,7 +32,9 @@ const Login = (props) => {
     const user = await login(credentials);
 
     if (user) {
+      console.log(user);
       setIsLoggedIn(true);
+      setCurrentUser(user);
       navigate("/");
     }
   };

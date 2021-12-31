@@ -7,8 +7,8 @@ const register = async (user) => {
   if (res.statusText !== "OK") {
     throw new Error("Something went wrong!");
   }
-  localStorage.setItem("session_id", res.data);
-  return true;
+  localStorage.setItem("session_id", res.data.session_id);
+  return res.data.user;
 };
 
 // Login with username and password
@@ -18,8 +18,8 @@ const login = async (credentials) => {
   if (res.statusText !== "OK") {
     throw new Error("Something went wrong!");
   }
-  localStorage.setItem("session_id", res.data);
-  return true;
+  localStorage.setItem("session_id", res.data.session_id);
+  return res.data.user;
 };
 
 // Logout

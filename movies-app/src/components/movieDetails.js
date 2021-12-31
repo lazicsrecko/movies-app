@@ -97,7 +97,7 @@ const MovieDetails = (props) => {
                 <Typography variant="body1" color="text.secondary">
                   Directed by:
                   {movie.directors.map((director) => (
-                    <Typography>{director}</Typography>
+                    <Typography key="director">{director}</Typography>
                   ))}
                 </Typography>
                 <Typography variant="h5" color="text.secondary">

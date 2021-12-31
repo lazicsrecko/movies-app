@@ -14,14 +14,22 @@ router.post("/register", async (req, res, next) => {
   });
   const user = await User.register(newUser, password);
   req.login(user, (err) => {
+    const response = {
+      user,
+      session_id: req.sessionID,
+    };
     if (err) return next(err);
-    res.status(200).send(req.sessionID);
+    res.status(200).send(response);
   });
 });
 
 // Login
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.status(200).send(req.sessionID);
+  const response = {
+    user: req.user,
+    session_id: req.sessionID,
+  };
+  res.status(200).send(response);
 });
 
 // Logout

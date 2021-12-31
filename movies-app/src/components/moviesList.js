@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useContext } from "react";
 import Spinner from "./spinner";
 import { getMovies } from "../services/movies-service";
 import Box from "@mui/material/Box";
@@ -9,10 +9,12 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import SearchBar from "./searchBar";
+import { Context } from "../context/user-context";
 
 const MoviesList = (props) => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { currentUser } = useContext(Context);
 
   const fetchMovies = async () => {
     const data = await getMovies();
@@ -36,6 +38,7 @@ const MoviesList = (props) => {
 
   useEffect(() => {
     fetchMovies();
+    console.log(currentUser);
   }, []);
 
   return movies.length < 1 ? (
