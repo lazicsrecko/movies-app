@@ -59,12 +59,8 @@ const MoviesList = () => {
         {filteredMovies()
           .slice(0, partialLoad)
           .map((movie) => (
-            <Grid item xs={4}>
-              <Link
-                key={movie._id}
-                className="textDecorationNone"
-                to={`/movies/${movie._id}`}
-              >
+            <Grid key={movie._id} item xs={4}>
+              <Link className="textDecorationNone" to={`/movies/${movie._id}`}>
                 <Card sx={{ maxWidth: 345, margin: "2rem" }}>
                   {movie.rating && (
                     <CardContent className="movieRating">

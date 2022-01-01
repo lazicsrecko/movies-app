@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/protectedRoutes";
 import Alerts from "./components/alert";
@@ -7,7 +7,6 @@ import Login from "./components/login";
 import Navigation from "./components/naviagation";
 import MoviesList from "./components/moviesList";
 import MovieDetails from "./components/movieDetails";
-import FourOFour from "./components/fourOFour";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
