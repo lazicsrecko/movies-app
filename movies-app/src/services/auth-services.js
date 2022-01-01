@@ -4,36 +4,47 @@ const session = JSON.parse(localStorage.getItem("session"));
 
 // Register new user
 const register = async (user) => {
-  const res = await axios.post(`http://localhost:3001/register`, user);
+  try {
+    const res = await axios.post(`http://localhost:3001/register`, user);
 
-  if (res.statusText !== "OK") {
-    throw new Error("Something went wrong!");
+    if (res.statusText === "OK") {
+      localStorage.setItem(
+        "session",
+        JSON.stringify({
+          _id: res.data._id,
+          session_id: res.data.session_id,
+        })
+      );
+      return res.data.user;
+    }
+  } catch (error) {
+    const message = error.response.data.message;
+    return { message };
   }
-  localStorage.setItem(
-    "session",
-    JSON.stringify({
-      _id: res.data._id,
-      session_id: res.data.session_id,
-    })
-  );
-  return res.data.user;
 };
 
 // Login with username and password
 const login = async (credentials) => {
-  const res = await axios.post(`http://localhost:3001/login`, credentials);
-  console.log(res);
-  if (res.statusText !== "OK") {
-    throw new Error("Something went wrong!");
+  try {
+    const res = await axios.post(`http://localhost:3001/login`, credentials);
+    if (res.statusText === "OK") {
+      localStorage.setItem(
+        "session",
+        JSON.stringify({
+          _id: res.data._id,
+          session_id: res.data.session_id,
+        })
+      );
+      return res.data.user;
+    }
+  } catch (error) {
+    if (error.response.status === 401) {
+      return {
+        message: "Username or password not correct!",
+      };
+    }
+    return { message: "Something went wrong" };
   }
-  localStorage.setItem(
-    "session",
-    JSON.stringify({
-      _id: res.data._id,
-      session_id: res.data.session_id,
-    })
-  );
-  return res.data.user;
 };
 
 // Logout

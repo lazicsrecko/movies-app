@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const Register = (props) => {
-  const { isLoggedIn, setIsLoggedIn } = props;
+  const { isLoggedIn, setIsLoggedIn, setErrorMessage } = props;
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -41,12 +41,13 @@ const Register = (props) => {
       email,
       password,
     };
-
     const user = await register(newUser);
 
-    if (user) {
+    if (user.user_id) {
       setIsLoggedIn(true);
       navigate("/");
+    } else {
+      setErrorMessage(user.message);
     }
   };
 
@@ -87,6 +88,7 @@ const Register = (props) => {
         onChange={onInputChange}
       />
       <TextField
+        inputProps={{ type: "password" }}
         className="inputFormFields"
         label="Password"
         name="password"

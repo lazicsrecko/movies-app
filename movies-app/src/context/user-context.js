@@ -17,7 +17,6 @@ const UserContext = (props) => {
 
   useEffect(() => {
     getCurrentUser();
-    console.log(currentUser);
   }, []);
 
   const user = useMemo(() => ({ currentUser, setCurrentUser }), [currentUser]);

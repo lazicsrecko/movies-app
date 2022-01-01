@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/protectedRoutes";
+import Alerts from "./components/alert";
 import Register from "./components/register";
 import Login from "./components/login";
 import Navigation from "./components/naviagation";
@@ -10,6 +11,11 @@ import FourOFour from "./components/fourOFour";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const onSetErrorMessage = (setBool) => {
+    setErrorMessage(setBool);
+  };
 
   const getSessionId = () => {
     const session = localStorage.getItem("session");
@@ -35,16 +41,29 @@ function App() {
         <Route
           path="/login"
           element={
-            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Login
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setErrorMessage={onSetErrorMessage}
+            />
           }
         />
         <Route
           path="/register"
           element={
-            <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Register
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setErrorMessage={onSetErrorMessage}
+            />
           }
         />
       </Routes>
+      <Alerts
+        open={errorMessage}
+        message={errorMessage}
+        closeAlert={onSetErrorMessage}
+      />
     </Router>
   );
 }

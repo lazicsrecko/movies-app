@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const Login = (props) => {
-  const { isLoggedIn, setIsLoggedIn } = props;
+  const { isLoggedIn, setIsLoggedIn, setErrorMessage } = props;
   const navigate = useNavigate();
   const { setCurrentUser } = useContext(Context);
   const [username, setUsername] = useState("");
@@ -24,6 +24,7 @@ const Login = (props) => {
   };
 
   const onLogin = async () => {
+    debugger;
     const credentials = {
       username,
       password,
@@ -31,11 +32,12 @@ const Login = (props) => {
 
     const user = await login(credentials);
 
-    if (user) {
-      console.log(user);
+    if (user.user_id) {
       setIsLoggedIn(true);
       setCurrentUser(user);
       navigate("/");
+    } else {
+      setErrorMessage(user.message);
     }
   };
 
@@ -56,6 +58,7 @@ const Login = (props) => {
       />
       <TextField
         className="inputFormFields"
+        inputProps={{ type: "password" }}
         label="Password"
         name="password"
         variant="outlined"

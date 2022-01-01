@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
+import { Context } from "../context/user-context";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../services/auth-services";
 import Tabs from "@mui/material/Tabs";
@@ -15,23 +16,16 @@ import { Link } from "react-router-dom";
 
 const Navigation = (props) => {
   const { isLoggedIn, setIsLoggedIn } = props;
+  const { currentUser } = useContext(Context);
   const navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [userMenu, setUserMenu] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(!anchorElUser);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleOpenUserMenu = () => {
+    setUserMenu(!userMenu);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setUserMenu(null);
   };
 
   const onLogout = async () => {
@@ -83,9 +77,14 @@ const Navigation = (props) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  open={anchorElUser}
+                  open={userMenu}
                   onClose={handleCloseUserMenu}
                 >
+                  <MenuItem divider>
+                    <Typography>
+                      {`${currentUser.firstName} ${currentUser.lastName}`}
+                    </Typography>
+                  </MenuItem>
                   <MenuItem onClick={onLogout}>
                     <Typography>Logout</Typography>
                   </MenuItem>
