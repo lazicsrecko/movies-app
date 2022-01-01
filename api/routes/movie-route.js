@@ -17,9 +17,15 @@ router.get("/", async (req, res) => {
 });
 
 // Get movie by id
-router.get("/:id", isLoggedIn, async (req, res) => {
+router.get("/:id/:session_id", isLoggedIn, async (req, res) => {
   const movieId = req.params.id;
-  const movie = await Movie.findById(movieId).populate("comments");
+  const movie = await Movie.findById(movieId).populate({
+    path: "comments",
+    populate: {
+      path: "user_id",
+      select: ["firstName", "lastName"],
+    },
+  });
   try {
     if (!movie) {
       res.status(400).send("No such movie in database!");

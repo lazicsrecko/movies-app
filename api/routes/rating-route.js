@@ -4,14 +4,42 @@ const { isLoggedIn } = require("../middleware/auth-middleware");
 const Rating = require("../models/rating");
 const Movie = require("../models/movies");
 
-// Rate a movie
-router.post("/", isLoggedIn, async (req, res) => {
-  const { movie_id, name, rating, date } = req.body;
+// Rating by user and movie id
+router.get("/:movie_id/:user_id/:session_id", isLoggedIn, async (req, res) => {
+  const { user_id, movie_id } = req.params;
   try {
+    const rating = await Rating.find({
+      movie_id: movie_id,
+      user_id: user_id,
+      isActive: true,
+    });
+    res.status(200).send(rating[0]);
+  } catch (err) {
+    res.status(500).json({
+      message: "Some  error occured",
+      err,
+    });
+  }
+});
+
+// Rate a movie
+router.post("/:session_id", isLoggedIn, async (req, res) => {
+  const { movie_id, user_id, rating, date } = req.body;
+  try {
+    const oldRating = await Rating.find({
+      movie_id: movie_id,
+      user_id: user_id,
+      isActive: true,
+    });
+    if (oldRating.length !== 0) {
+      oldRating[0].isActive = false;
+      await oldRating[0].save();
+    }
     const newRating = await Rating.create({
       movie_id,
-      name,
+      user_id,
       rating,
+      isActive: true,
       date,
     });
     const ratingsByMovieId = await Rating.find({ movie_id: movie_id });

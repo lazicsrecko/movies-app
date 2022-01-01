@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const session = JSON.parse(localStorage.getItem("session"));
+
 // Register new user
 const register = async (user) => {
   const res = await axios.post(`http://localhost:3001/register`, user);
@@ -7,7 +9,13 @@ const register = async (user) => {
   if (res.statusText !== "OK") {
     throw new Error("Something went wrong!");
   }
-  localStorage.setItem("session_id", res.data.session_id);
+  localStorage.setItem(
+    "session",
+    JSON.stringify({
+      _id: res.data._id,
+      session_id: res.data.session_id,
+    })
+  );
   return res.data.user;
 };
 
@@ -18,7 +26,13 @@ const login = async (credentials) => {
   if (res.statusText !== "OK") {
     throw new Error("Something went wrong!");
   }
-  localStorage.setItem("session_id", res.data.session_id);
+  localStorage.setItem(
+    "session",
+    JSON.stringify({
+      _id: res.data._id,
+      session_id: res.data.session_id,
+    })
+  );
   return res.data.user;
 };
 
@@ -29,12 +43,31 @@ const logout = async () => {
   if (res.statusText !== "OK") {
     throw new Error("Something went wrong");
   }
-  localStorage.removeItem("session_id");
+  localStorage.removeItem("session");
   return true;
+};
+
+const getUserData = async () => {
+  const res = await axios.get(
+    `http://localhost:3001/user/${session._id}/${session.session_id}`,
+    {
+      withCredentials: true,
+    }
+  );
+  if (res.statusText !== "OK") {
+    throw new Error("Something went wrong");
+  }
+  return res.data.user;
 };
 
 const _register = register;
 const _login = login;
 const _logout = logout;
+const _getUserData = getUserData;
 
-export { _register as register, _login as login, _logout as logout };
+export {
+  _register as register,
+  _login as login,
+  _logout as logout,
+  _getUserData as getUserData,
+};

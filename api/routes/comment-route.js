@@ -5,12 +5,12 @@ const Comment = require("../models/comments");
 const Movie = require("../models/movies");
 
 // Comment movie
-router.post("/", isLoggedIn, async (req, res) => {
-  const { movie_id, name, text, date } = req.body;
+router.post("/:session_id", isLoggedIn, async (req, res) => {
+  const { movie_id, user_id, text, date } = req.body;
   try {
     const newComment = await Comment.create({
       movie_id,
-      name,
+      user_id,
       text,
       date,
     });

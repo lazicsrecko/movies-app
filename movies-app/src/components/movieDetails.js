@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../context/user-context";
 import Spinner from "./spinner";
 import { getMovieById } from "../services/movies-service";
 import { commentMovie } from "../services/comment-service";
-import { rateMovie } from "../services/rating-service";
+import { rateMovie, getRateByMovieAndUserId } from "../services/rating-service";
 import { useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Card from "@mui/material/Card";
@@ -20,13 +21,20 @@ const MovieDetails = (props) => {
   const [commentText, setCommentText] = useState("");
   const [rateInput, setRateInput] = useState(0);
   const { movieId } = useParams();
+  const { currentUser } = useContext(Context);
 
   const fetchMovie = async (movieId) => {
-    const data = await getMovieById(movieId);
-    console.log(data);
-    setMovie(data);
-    setRateInput(data.rating);
-    console.log(data);
+    const movieData = await getMovieById(movieId);
+    const rateData = await getRateByMovieAndUserId(
+      movieId,
+      currentUser.user_id
+    );
+    setMovie(movieData);
+    if (!rateData) {
+      setRateInput(0);
+    } else {
+      setRateInput(rateData.rating);
+    }
   };
 
   const onInputChage = (e) => {
@@ -40,7 +48,7 @@ const MovieDetails = (props) => {
 
   const onRatingSubmit = async () => {
     const rating = {
-      name: "User user",
+      user_id: currentUser.user_id,
       movie_id: movie._id,
       date: new Date(),
       rating: parseInt(rateInput),
@@ -55,7 +63,7 @@ const MovieDetails = (props) => {
   const onCommentSubmit = async () => {
     const comment = {
       movie_id: movie._id,
-      name: "Test test",
+      user_id: currentUser.user_id,
       text: commentText,
       date: new Date(),
     };
@@ -145,7 +153,7 @@ const MovieDetails = (props) => {
               movie.comments.map((comment) => (
                 <Card style={{ marginBottom: "0.5rem", padding: "0.5rem" }}>
                   <Typography variant="h5" color="text.primary">
-                    {comment.name}
+                    {`${comment.user_id.firstName} ${comment.user_id.lastName}`}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {comment.text}

@@ -38,7 +38,6 @@ const MoviesList = (props) => {
 
   useEffect(() => {
     fetchMovies();
-    console.log(currentUser);
   }, []);
 
   return movies.length < 1 ? (

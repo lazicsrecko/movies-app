@@ -12,14 +12,13 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   const getSessionId = () => {
-    const session_id = localStorage.getItem("session_id");
-    if (session_id) {
-      setIsLoggedIn(session_id);
+    const session = localStorage.getItem("session");
+    if (session) {
+      setIsLoggedIn(session);
     }
   };
   useEffect(() => {
     getSessionId();
-    console.log(getSessionId());
   }, []);
   return (
     <Router>
