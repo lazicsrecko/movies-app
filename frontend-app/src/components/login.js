@@ -24,7 +24,6 @@ const Login = (props) => {
   };
 
   const onLogin = async () => {
-    debugger;
     const credentials = {
       username,
       password,

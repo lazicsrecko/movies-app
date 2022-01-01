@@ -29,14 +29,8 @@ function App() {
     <Router>
       <Navigation isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
-        <Route
-          path="/"
-          element={<ProtectedRoutes isAuthenticated={isLoggedIn} />}
-        >
-          <Route path="/" element={<MoviesList />} />
-          <Route path="/movies" element={<MoviesList />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />} />
-        </Route>
+        <Route path="/" element={<MoviesList />} />
+        <Route path="/movies" element={<MoviesList />} />
         <Route
           path="/login"
           element={
@@ -57,6 +51,12 @@ function App() {
             />
           }
         />
+        <Route
+          path="/"
+          element={<ProtectedRoutes isAuthenticated={isLoggedIn} />}
+        >
+          <Route path="/movies/:movieId" element={<MovieDetails />} />
+        </Route>
       </Routes>
       <Alerts
         open={errorMessage}

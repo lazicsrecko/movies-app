@@ -43,11 +43,9 @@ const Navigation = (props) => {
           <Link className="textDecorationNone" to="/">
             <Tab label={<TheaterComedyIcon />} />
           </Link>
-          {isLoggedIn && (
-            <Link className="textDecorationNone" to="/movies">
-              <Tab label="Movies" />
-            </Link>
-          )}
+          <Link className="textDecorationNone" to="/movies">
+            <Tab label="Movies" />
+          </Link>
           <Box className="navMenu">
             {!isLoggedIn && (
               <Fragment>
