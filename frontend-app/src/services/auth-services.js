@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const session = JSON.parse(localStorage.getItem("session"));
-
 // Register new user
 const register = async (user) => {
   try {
@@ -59,6 +57,7 @@ const logout = async () => {
 };
 
 const getUserData = async () => {
+  const session = JSON.parse(localStorage.getItem("session"));
   const res = await axios.get(
     `http://localhost:3001/user/${session._id}/${session.session_id}`,
     {

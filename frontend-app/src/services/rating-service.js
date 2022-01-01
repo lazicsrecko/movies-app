@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const session = JSON.parse(localStorage.getItem("session"));
-
 // Get rating by user and movie id
 const getRateByMovieAndUserId = async (movieId, userId) => {
+  const session = JSON.parse(localStorage.getItem("session"));
   const res = await axios.get(
     `http://localhost:3001/rating/${movieId}/${userId}/${session.session_id}`,
     {
@@ -19,6 +18,7 @@ const getRateByMovieAndUserId = async (movieId, userId) => {
 
 // Post new rating
 const rateMovie = async (rating) => {
+  const session = JSON.parse(localStorage.getItem("session"));
   const res = await axios.post(
     `http://localhost:3001/rating/${session.session_id}`,
     rating,

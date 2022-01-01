@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const session = JSON.parse(localStorage.getItem("session"));
-
 const getMovies = async () => {
   const res = await axios.get("http://localhost:3001/movies", {
     withCredentials: true,
@@ -15,6 +13,7 @@ const getMovies = async () => {
 };
 
 const getMovieById = async (movieId) => {
+  const session = JSON.parse(localStorage.getItem("session"));
   const res = await axios.get(
     `http://localhost:3001/movies/${movieId}/${session.session_id}`,
     {
