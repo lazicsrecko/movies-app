@@ -6,5 +6,10 @@ services:
       - '27017:27017'
     volumes:
       - moviesdb_data_container:/data/db
+  mongo-seed:
+    container_name: mongo-seed
+    build: .
+    depends_on:
+      - mongodb
 volumes:
   moviesdb_data_container:

@@ -28,7 +28,7 @@ router.get("/:id/:session_id", isLoggedIn, async (req, res) => {
   });
   try {
     if (!movie) {
-      res.status(400).send("No such movie in database!");
+      return res.status(400).send("No such movie in database!");
     }
     res.status(200).send(movie);
   } catch (err) {
