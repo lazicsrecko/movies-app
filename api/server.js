@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { configureMongoDb } = require("./infrastructure/database-configuration/mongo-configuration");

@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
-const dbUri = "mongodb+srv://admin:v9jxFgbJSUK3H5G@cluster0.znu9f.mongodb.net/moviesDB?retryWrites=true&w=majority";
+const dbUri = process.env.CONNECTION_STRING;
+const secret = process.env.SESSION_SECRET;
 
 const sessionConfig = {
-    secret: "secret",
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
