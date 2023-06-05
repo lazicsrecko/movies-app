@@ -1,4 +1,4 @@
-const Session = require("../models/session");
+const Session = require("../../models/session");
 const mongoose = require("mongoose");
 
 module.exports.isLoggedIn = async (req, res, next) => {

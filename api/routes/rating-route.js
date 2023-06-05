@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn } = require("../middleware/auth-middleware");
+const { isLoggedIn } = require("../infrastructure/middlewares/auth-middleware");
 const Rating = require("../models/rating");
 const Movie = require("../models/movies");
 

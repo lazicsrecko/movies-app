@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { isLoggedIn } = require("../middleware/auth-middleware");
+const { isLoggedIn } = require("../infrastructure/middlewares/auth-middleware");
 const User = require("../models/users");
 
 // Register
