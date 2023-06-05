@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
-const dbUri = process.env.CONNECTION_STRING;
+const dbUri = process.env.REMOTE_CONNECTION_STRING || process.env.LOCAL_CONNECTION_STRING;
 const secret = process.env.SESSION_SECRET;
 
 const sessionConfig = {
